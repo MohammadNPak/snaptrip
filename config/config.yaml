@@ -1,0 +1,17 @@
+# Server configurations
+server:
+  host: "localhost"
+  port: 8000
+
+# Database credentials
+database:
+  user: "postgres"
+  pass: "Zaq1"
+  host: "localhost"
+  port: "5432"
+  dbname: "snapptrip"
+  sslmode: "disable"
+  TimeZone: "Asia/Tehran"
+
+
+

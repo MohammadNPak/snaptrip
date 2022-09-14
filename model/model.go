@@ -1,17 +1,17 @@
 package model
 
 type City struct {
-	ID         uint16
-	IsActive   bool
-	IATA       string
-	Name       string
-	created_at string
+	ID        int32
+	IsActive  bool
+	IATA      string
+	Name      string
+	CreatedAt string
 }
 
 type Airline struct {
-	ICAO       string
-	name       string
-	name_farsi string
+	ICAO      string
+	Name      string
+	NameFarsi string
 }
 
 type Agencie struct {
@@ -28,21 +28,6 @@ type Supplier struct {
 	NameFarsi string
 	CreatedAt string
 }
-type Route struct {
-	Origin      string `json:"origin"`
-	Destination string `json:"destination"`
-}
-
-type Rule struct {
-	ID          int32
-	Routes      []Route  `json:"routes"`
-	Airlines    []string `json:"airlines"`
-	Agencies    []string `json:"agencies"`
-	Suppliers   []string `json:"suppliers"`
-	AmountType  string   `json:"amountType"`
-	AmountValue float64  `json:"amountValue"`
-}
-
 type Ticket struct {
 	Origin       string `json:"origin"`
 	Destination  string `json:"destination"`
@@ -52,4 +37,19 @@ type Ticket struct {
 	BasePrice    int64  `json:"basePrice"`
 	Markup       int64  `json:"markup"`
 	PayablePrice int64  `json:"payablePrice"`
+}
+type Route struct {
+	ID          int32  `gorm:"type:int"`
+	Origin      string `json:"origin"`
+	Destination string `json:"destination"`
+}
+
+type Rule struct {
+	ID          int32
+	// Routes      []Route  `json:"routes" gorm:"foreignKey:ID"`
+	// Airlines    []string `json:"airlines" gorm:"foreignKey:ICAO"`
+	Agencies    []string `json:"agencies" gorm:"foreignKey:Name"`
+	// Suppliers   []string `json:"suppliers" gorm:"foreignKey:Name"`
+	AmountType  string   `json:"amountType"`
+	AmountValue float64  `json:"amountValue"`
 }

@@ -2,12 +2,14 @@ package main
 
 import (
 	"net/http"
+	"snapptrip/migrations"
+	"snapptrip/model"
 
 	"github.com/gin-gonic/gin"
 )
 
 func getPrice(c *gin.Context) {
-	var tickets []Ticket
+	var tickets []model.Ticket
 
 	error := c.BindJSON(&tickets)
 	if error != nil {
@@ -17,7 +19,7 @@ func getPrice(c *gin.Context) {
 }
 
 func createRule(c *gin.Context) {
-	var rules []Rule
+	var rules []model.Rule
 	error := c.BindJSON(&rules)
 	if error != nil {
 		return
@@ -26,8 +28,12 @@ func createRule(c *gin.Context) {
 }
 
 func main() {
+	migrations.CreateDb()
+	db := migrations.OpenDb()
+	migrations.Migrate(db)
 	router := gin.Default()
 	router.POST("/changeprice", getPrice)
 	router.POST("/createrule", createRule)
+
 	router.Run("localhost:8080")
 }
