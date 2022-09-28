@@ -35,17 +35,27 @@ type RuleSerializer struct {
 
 func (self RuleSerializer) Save(db *gorm.DB) error {
 	rule := model.Rule{AmountType: self.AmountType, AmountValue: self.AmountValue}
+	// db.Where()
 	id := rule.ID
+	for agency_index:=0;agency_index<len(self.Agencies);agency_index++{
+		for airlines_index:=0;airlines_index<len(self.Airlines);airlines_index++{
+			for route_index:=0;route_index<len(self.Routes);route_index++{
+				for suplier_index:=0;suplier_index<len(self.Suppliers);suplier_index++{
+					db.Exec(fmt.Sprintf(`insert into `))
+				}
+			}
+		}
+	}
 	if len(self.Airlines) != 0 {
-		airlines := " (VALUES (" + strings.Join(self.Airlines, ")(") + ") a(A) "
+		airlines := " (VALUES (" + strings.Join(self.Airlines, "),(") + ") a(A) "
 		fmt.Printf("%s", airlines)
 	}
 	if len(self.Suppliers) != 0 {
-		suppliers := " (VALUES (" + strings.Join(self.Suppliers, ")(") + ") a(A) "
+		suppliers := " (VALUES (" + strings.Join(self.Suppliers, "),(") + ") a(A) "
 		fmt.Printf("%s", suppliers)
 	}
 	if len(self.Agencies) != 0 {
-		agencies := " (VALUES (" + strings.Join(self.Agencies, ")(") + ") a(A) "
+		agencies := " (VALUES (" + strings.Join(self.Agencies, "),(") + ") a(A) "
 		fmt.Printf("%s", agencies)
 	}
 	fmt.Printf("%d", id)
