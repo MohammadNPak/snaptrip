@@ -52,10 +52,69 @@ func Migrate(db *gorm.DB) {
 	db.AutoMigrate(
 		&model.City{},
 		&model.Airline{},
-		&model.Agencie{},
+		&model.Agency{},
 		&model.Supplier{},
-		&model.Route{},
+		// &model.Route{},
 		&model.Rule{},
-		&model.Ticket{})
+		&model.RuleData{},
+	)
 
 }
+
+// insert into cities (origin_id,destination_id)
+// select
+// 	table1.iata as origin_id,table2.iata as destination_id
+// from
+// 	(select iata from cities union select null)  table1
+// cross join
+//  	(select iata from cities union select null )  table2
+// ;
+
+// func create_route_table(db *gorm.DB) {
+// 	db.Exec(`insert into routes (origin,destination)
+// 		select from
+// 		(select iata from cities as o_iata)
+// 		cross join
+// 		(select iata from cities as d_iata)
+// 		`)
+// }
+
+// func create_rule_table(db *gorm.DB) {
+// 	db.Exec(`CREATE TABLE IF NOT EXISTS rules2 (
+// 		id integer not null,
+// 		rule_id integer not null,
+// 		origin varchar(3),
+// 		destination varchar(3),
+// 		airlines varchar(3) ,
+// 		agencies varchar(100) ,
+// 		suppliers varchar(100),
+// 		amountType BOOLEAN ,
+// 		amountValue NUMERIC() ,
+// 		PRIMARY KEY (id)
+// 		CONSTRAINT fk_origin
+// 			FOREIGN KEY(origin)
+// 				REFERENCES cities(iata)
+// 				ON DELETE CASCADE,
+
+// 		CONSTRAINT fk_destination
+// 			FOREIGN KEY(destination)
+// 				REFERENCES cities(iata)
+// 				ON DELETE CASCADE,
+
+// 		CONSTRAINT fk_airlines
+// 			FOREIGN KEY(airlines)
+// 				REFERENCES airlines(icao)
+// 				ON DELETE CASCADE,
+
+// 		CONSTRAINT fk_agencies
+// 			FOREIGN KEY(agencies)
+// 				REFERENCES agencies(name)
+// 				ON DELETE CASCADE,
+
+// 		CONSTRAINT fk_suppliers
+// 			FOREIGN KEY(suppliers)
+// 				REFERENCES suppliers(name)
+// 				ON DELETE CASCADE,
+
+// 	  )`)
+// }

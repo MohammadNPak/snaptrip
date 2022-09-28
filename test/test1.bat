@@ -1,0 +1,2 @@
+curl  localhost:8080/createrule  --json {"routes": null,"airlines": ["ep"],"agencies": null,"suppliers": ["zagros"],"amountType": "PERCENTAGE","amountValue": 2}
+@REM curl  localhost:8080/createrule  --json "bootcamp\request-response\create_rule_request.json" 
