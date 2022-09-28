@@ -54,11 +54,11 @@ func Migrate(db *gorm.DB) {
 		&model.Airline{},
 		&model.Agency{},
 		&model.Supplier{},
-		// &model.Route{},
+		&model.Route{},
 		&model.Rule{},
 		&model.RuleData{},
 	)
-
+	
 }
 
 // insert into cities (origin_id,destination_id)

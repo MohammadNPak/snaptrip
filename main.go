@@ -5,7 +5,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 
-	"snapptrip/management"
+	// "snapptrip/management"
 	"snapptrip/migrations"
 
 	// "snapptrip/model"
@@ -37,7 +37,7 @@ func main() {
 	migrations.CreateDb()
 	db := migrations.OpenDb()
 	migrations.Migrate(db)
-	management.LoadData(db)
+	// management.LoadData(db)
 	router := gin.Default()
 	router.POST("/changeprice", getPrice)
 	router.POST("/createrule", createRule)

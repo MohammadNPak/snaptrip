@@ -38,7 +38,7 @@ func loadCity(db *gorm.DB) *[]model.City {
 			ID:       uint16(id),
 			IsActive: is_active,
 			IATA:     line[2],
-			Name:     line[4]})
+			Name:     line[3]})
 	}
 	db.CreateInBatches(cities, len(cities))
 
@@ -101,10 +101,22 @@ func loadSupplier(db *gorm.DB) *[]model.Supplier {
 	return &suppliers
 }
 
+func loadRoutes(db *gorm.DB) {
+	db.Exec(` insert into routes (origin_id,destination_id)
+						select
+							table1.iata as origin_id,table2.iata as destination_id
+						from
+							(select iata from cities )  table1
+						cross join
+							 (select iata from cities )  table2
+ 						where table1.iata!=table2.iata;`)
+
+}
+
 func LoadData(db *gorm.DB) {
 	loadCity(db)
 	loadAgency(db)
 	loadAirline(db)
 	loadSupplier(db)
-
+	loadRoutes(db)
 }

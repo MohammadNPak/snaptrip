@@ -40,8 +40,8 @@ type Supplier struct {
 
 type Route struct {
 	ID            uint16 `gorm:"primaryKey;index:,unique;"`
-	OriginID      string `gorm:"size:3"`
-	DestinationID string `gorm:"size:3"`
+	OriginID      string `gorm:"size:3;index"`
+	DestinationID string `gorm:"size:3;index"`
 	Origin        City
 	Destination   City
 }
@@ -50,6 +50,7 @@ type Rule struct {
 	ID          uint16 `gorm:"primaryKey;index:,unique;"`
 	AmountType  string
 	AmountValue float64
+	RuleDatas   []RuleData
 }
 
 type RuleData struct {
