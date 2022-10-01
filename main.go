@@ -42,6 +42,7 @@ func createRule(c *gin.Context) {
 func main() {
 	newdb := flag.Bool("newdb", false, "create data base ")
 	loaddata := flag.Bool("loaddb", false, "load data base from csv file in ./bootcamp/data ")
+	flag.Parse()
 	if *newdb {
 		migrations.CreateDb()
 	}

@@ -50,22 +50,8 @@ type Rule struct {
 	ID          uint16 `gorm:"primaryKey;index:,unique;"`
 	AmountType  string
 	AmountValue float64
-	RuleDatas   []RuleData
-}
-
-type RuleData struct {
-	Rule          Rule
-	RuleID        uint16
-	Route         Route
-	RouteId       uint16
-	OriginID      string `gorm:"size:3"`
-	DestinationID string `gorm:"size:3"`
-	Origin        City
-	Destination   City
-	Airline       Airline
-	AirlineID     string `gorm:"size:3"`
-	Agency        Agency
-	AgencyID      uint16
-	Supplier      Supplier
-	SupplierID    uint16
+	Routes      []Route    `gorm:"many2many:rule_route;"`
+	Airlines    []Airline  `gorm:"many2many:rule_airline;"`
+	Agencies    []Agency   `gorm:"many2many:rule_agency;"`
+	Suppliers   []Supplier `gorm:"many2many:rule_supplier;"`
 }

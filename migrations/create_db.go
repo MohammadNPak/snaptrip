@@ -49,17 +49,27 @@ func OpenDb() *gorm.DB {
 }
 
 func fill_route_table(db *gorm.DB) {
-	db.Exec(` insert into 
-							routes (origin_id,destination_id)
-						select
-							table1.iata as origin_id,table2.iata as destination_id
-						from
-							(select iata from cities union select null)  table1
-						cross join
-							 (select iata from cities union select null )  table2;
+	db.Exec(` 
+	begin;
+	-- add origin without destination
+	insert into routes (origin_id)
+	select  iata as origin_id from cities;
+	-- add destination without origin  
+	insert into routes (destination_id)
+	select  iata as destination_id from cities;
+	-- add origin with destination
+	insert into routes (origin_id,destination_id)
+	select
+		 table1.iata as origin_id,table2.iata as destination_id
+	from
+		 (select iata from cities )  table1
+	cross join
+		 (select iata from cities )  table2;
+	-- delete routes with same origin and destination
+	delete from routes where origin_id=destination_id;
+	commit;
 					`)
 }
-
 
 func Migrate(db *gorm.DB) {
 	db.AutoMigrate(
@@ -69,13 +79,10 @@ func Migrate(db *gorm.DB) {
 		&model.Supplier{},
 		&model.Route{},
 		&model.Rule{},
-		&model.RuleData{},
 	)
+	fill_route_table(db)
 
 }
-
-
-
 
 // func create_rule_table(db *gorm.DB) {
 // 	db.Exec(`CREATE TABLE IF NOT EXISTS rules2 (
